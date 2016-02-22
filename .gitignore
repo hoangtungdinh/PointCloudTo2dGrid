@@ -1,0 +1,9 @@
+.idea/
+*.iml
+*.iws
+.DS_Store
+.RData
+*.pdf
+*.xyz
+*.dae
+*.txt
