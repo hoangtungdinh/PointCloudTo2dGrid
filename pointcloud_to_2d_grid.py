@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def point_cloud_to_2d_gird(input_xyz_file, output_txt_file, depth, altitude, visualization):
+def point_cloud_to_2d_gird(input_xyz_file, output_txt_file, depth, altitude, scatterplot, gridplot):
     points = []
 
     x_min = float('inf')
@@ -58,32 +58,30 @@ def point_cloud_to_2d_gird(input_xyz_file, output_txt_file, depth, altitude, vis
 
     f = open(output_txt_file, 'w')
     f.write('%d\n' % depth)
-    f.write('%f\n' % x_res)
-    f.write('%f\n' % y_res)
+    f.write('%d\t%d\n' % (round(x_res), round(y_res)))
 
     for x in range(width):
         for y in range(width):
             f.write('%d %d %d\n' % (x, y, map[x][y]))
     f.close()
 
-    if visualization:
+    if scatterplot:
         plt.figure(1)
         plt.scatter(x_base, y_base, color='blue')
         plt.scatter(x_filtered, y_filtered, color='red')
 
+    if gridplot:
         numpy_map = np.array(map)
         plt.figure(2)
         plt.imshow(np.rot90(numpy_map), interpolation='nearest')
         plt.grid(True)
 
+    if scatterplot or gridplot:
         plt.show()
 
 
 if __name__ == '__main__':
-    input_file = 'paradisecity.xyz'
-    output_file = 'gridmap.txt'
     max_depth = 7
     height_threshold = 1181  # (inches, ~ 30 meters)
-    visualize = True
 
-    point_cloud_to_2d_gird(input_file, output_file, max_depth, height_threshold, visualize)
+    point_cloud_to_2d_gird('allsamples.xyz', 'gridmap.txt', max_depth, height_threshold, False, True)
