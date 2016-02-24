@@ -88,7 +88,6 @@ def point_cloud_to_2d_gird(input_xyz_file, unit_conversion, output_txt_file, dep
     f.close()
 
     if random_pairs > 0:
-        min_distance = math.sqrt(x_diff**2 + y_diff**2)
         pairs = []
         random.seed(1)
         for i in range(random_pairs):
@@ -105,6 +104,7 @@ def point_cloud_to_2d_gird(input_xyz_file, unit_conversion, output_txt_file, dep
         pairFile = open('pairs.txt', 'w')
         for pair in pairs:
             pairFile.write('%d\t%d\t%d\t%d\n' % (pair[0], pair[1], pair[2], pair[3]))
+        pairFile.close()
 
     if scatterplot:
         plt.figure(1)
