@@ -24,7 +24,7 @@ def valid_pair(map, resolution, origin, destination):
     return True
 
 
-def point_cloud_to_2d_gird(input_xyz_file, output_txt_file, depth, altitude, scatterplot=False, gridplot=False, random_pairs=0):
+def point_cloud_to_2d_gird(input_xyz_file, unit_conversion, output_txt_file, depth, altitude, scatterplot=False, gridplot=False, random_pairs=0):
     points = []
 
     x_min = float('inf')
@@ -41,7 +41,7 @@ def point_cloud_to_2d_gird(input_xyz_file, output_txt_file, depth, altitude, sca
 
     for line in file:
         line_string = line.split()
-        coord = (float(line_string[0]), float(line_string[1]), float(line_string[2]))
+        coord = (float(line_string[0]) * unit_conversion, float(line_string[1]) * unit_conversion, float(line_string[2]) * unit_conversion)
 
         if coord[0] < x_min:
             x_min = coord[0]
@@ -122,7 +122,8 @@ def point_cloud_to_2d_gird(input_xyz_file, output_txt_file, depth, altitude, sca
 
 
 if __name__ == '__main__':
-    max_depth = 10
-    height_threshold = 1181  # (inches, ~ 30 meters)
+    max_depth = 7
+    height_threshold = 30000  # (millimeters)
 
-    point_cloud_to_2d_gird('allsamples.xyz', 'gridmap.txt', max_depth, height_threshold, False, True, 0)
+    # data store in inches ~ 25,4 millimeters
+    point_cloud_to_2d_gird('sampledparadisecity.xyz', 25.4, 'gridmap.txt', max_depth, height_threshold, False, True, 0)
