@@ -80,7 +80,7 @@ def point_cloud_to_2d_gird(input_xyz_file, unit_conversion, output_txt_file, dep
 
     f = open(output_txt_file, 'w')
     f.write('%d\n' % depth)
-    f.write('%d\t%d\n' % (round(x_res), round(y_res)))
+    f.write('%d %d\n' % (round(x_res), round(y_res)))
 
     for x in range(width):
         for y in range(width):
@@ -103,7 +103,7 @@ def point_cloud_to_2d_gird(input_xyz_file, unit_conversion, output_txt_file, dep
             pairs.append((row_origin*round(x_res), col_origin*round(y_res), row_destination*round(x_res), col_destination*round(y_res)))
         pairFile = open('pairs.txt', 'w')
         for pair in pairs:
-            pairFile.write('%d\t%d\t%d\t%d\n' % (pair[0], pair[1], pair[2], pair[3]))
+            pairFile.write('%d %d %d %d\n' % (pair[0], pair[1], pair[2], pair[3]))
         pairFile.close()
 
     if scatterplot:
